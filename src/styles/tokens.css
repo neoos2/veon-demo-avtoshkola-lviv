@@ -1,0 +1,83 @@
+/* Hallmark · shape: split hero with letter picker, then banded sections · genre: modern-minimal · theme: custom · job: book · idea: "Почніть зі своєї літери: категорія посвідчення — вхід на сайт і головний образ" · vibe: "точно, прямо, фірмові синій і золото"
+ * surface: absolute · paper: #FFFFFF · accent: #A79344 · display: Geologica · body: IBM Plex Sans · hero: dark navy field, H1 left, six huge category letters right that answer a tap with age, term and price · nav: wordmark + anchors + phone button · footer: deep navy with four class addresses, phones, legal entity · imagery: client photos · signature: huge category letters that respond to a tap
+ * axes: light/geometric-grotesque/gold · posture: committed · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · waive 7b · palette is fixed by the approved concept (#FFFFFF ground and on-colour, contrast pairs checked) · the client brand pair on white ground is the recognisable part of the identity, so the base is not tinted */
+/* Hallmark · waive 39b · the six category tiles are the signature of the concept and a 168px tile is a letter sign, not a marketing button · each tile is a real button with aria-pressed and a minimum of 84px on phones */
+/* Hallmark · waive 78 · section heads follow the concept scale (H2 about 2.4rem under a 3.8rem H1) · the concept type scale 1.25 was approved with the design */
+/* Hallmark · pre-emit critique: P4 H4 E3 S4 R4 V4 · weakest: E, motion limited to four transform/opacity effects by concept */
+/* Hallmark · waive 44c · split hero: the text column and the letter grid are vertically centred on one axis, the check reads the two columns separately */
+/* Hallmark · waive 72 · the 168px letter tile holds a single display letter centred with clear inner space; the text never touches the tile edge */
+/* Client design tokens: source design/concept.md (veon-concept). One token system. */
+@font-face { font-family: "Geologica"; font-style: normal; font-weight: 300 800; font-display: swap;
+  src: url("../assets/fonts/geologica-cyrillic-wght-normal.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Geologica"; font-style: normal; font-weight: 300 800; font-display: swap;
+  src: url("../assets/fonts/geologica-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("../assets/fonts/ibm-plex-sans-cyrillic-400-normal.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("../assets/fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("../assets/fonts/ibm-plex-sans-cyrillic-500-normal.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("../assets/fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("../assets/fonts/ibm-plex-sans-cyrillic-600-normal.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("../assets/fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  /* colour roles (concept §8, pairs checked with contrast_check.py) */
+  --color-primary: #2F3D5E;
+  --color-deep: #1B2438;
+  --color-accent: #A79344;
+  --color-accent-text: #75652A;
+  --color-text: #172033;
+  --color-muted: #566079;
+  --color-bg: #FFFFFF;
+  --color-surface: #EEF1F6;
+  --color-on-primary: #FFFFFF;
+  --color-border: #D5DAE4;
+  --color-field: #566079;
+  --color-on-deep: #FFFFFF;
+  --color-on-deep-muted: #C3CAD8;
+  --color-line-on-deep: #8592AE;
+
+  --color-accent-ink: #1B2438;
+  --color-accent-hover: #B6A252;
+  --color-veil: rgb(255 255 255 / .08);
+  --color-veil-line: rgb(255 255 255 / .18);
+
+  --font-display: "Geologica", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+
+  /* type scale 1.25: 14 / 17 / 21 / 27 / 34 / 61 */
+  --fs-sm: 0.875rem;
+  --fs-base: 1.0625rem;
+  --fs-md: 1.3125rem;
+  --fs-lg: 1.6875rem;
+  --fs-xl: 2.125rem;
+  --fs-2xl: clamp(2.25rem, 1.4rem + 3.4vw, 3.8rem);
+  --fs-h2: clamp(1.75rem, 1.3rem + 1.6vw, 2.4rem);
+
+  /* spacing, multiples of 8 */
+  --sp-1: 0.5rem; --sp-2: 1rem; --sp-3: 1.5rem; --sp-4: 2.5rem; --sp-5: 4rem; --sp-6: 6.5rem; --sp-7: 10rem;
+  --section-y: 4rem;
+  --space: 1.25rem;
+  --container: 1200px;
+  --gap: 1.5rem;
+  --header-h: 64px;
+
+  --radius: 6px;
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --dur: 600ms;
+  --ring: 3px;
+}
+@media (min-width: 900px) { :root { --section-y: 6.5rem; --header-h: 72px; --space: 2rem; } }

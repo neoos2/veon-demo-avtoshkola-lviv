@@ -1,0 +1,51 @@
+---
+import { classes, weekdays } from "../data/school";
+---
+<div class="sched">
+  <ul class="sched__legend" aria-label="Позначення">
+    <li><span class="swatch swatch--day"></span>Денні групи</li>
+    <li><span class="swatch swatch--eve"></span>Вечірні групи</li>
+  </ul>
+  <div class="sched__days" aria-hidden="true">
+    {weekdays.map((d) => <span>{d}</span>)}
+  </div>
+  {classes.map((c) => (
+    <article class="sched__class" id={`class-${c.id}`}>
+      <h3 class="sched__name">{c.name}{c.note && <small>{c.note}</small>}</h3>
+      <ul class="lanes">
+        {c.lanes.map((l, i) => (
+          <li class="lane" style={`--from:${l.from + 1};--to:${l.to + 2}`}>
+            <span class:list={["bar", `bar--${l.kind}`, l.open && "bar--open"]} data-bar>
+              <span class="bar__kind">{l.kind === "day" ? "Денна" : "Вечірня"}</span>
+              {!l.open && <span class="bar__days">{l.days}</span>}
+              <span class="bar__time num">{l.time}</span>
+              {l.open && <span class="bar__ask">дні уточнюйте за телефоном</span>}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </article>
+  ))}
+</div>
+<p class="table-note">Розклад — за даними школи. Актуальність розкладу уточнюйте за телефоном.</p>
+
+<script>
+  const mq = window.matchMedia("(min-width: 768px)");
+  const items = document.querySelectorAll<HTMLElement>(".sched__class");
+  items.forEach((el, i) => {
+    const h = el.querySelector("h3")!;
+    const lanes = el.querySelector<HTMLElement>(".lanes")!;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "sched__toggle";
+    btn.setAttribute("aria-controls", `lanes-${i}`);
+    lanes.id = `lanes-${i}`;
+    while (h.firstChild) btn.append(h.firstChild);
+    h.append(btn);
+    const set = (open: boolean) => { btn.setAttribute("aria-expanded", String(open)); el.dataset.open = String(open); };
+    btn.addEventListener("click", () => set(btn.getAttribute("aria-expanded") !== "true"));
+    const apply = () => { btn.disabled = mq.matches; set(mq.matches || i === 0); };
+    mq.addEventListener("change", apply);
+    apply();
+  });
+</script>

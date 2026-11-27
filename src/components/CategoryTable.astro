@@ -1,0 +1,22 @@
+---
+import { categories, priceNote } from "../data/school";
+---
+<table class="ctable">
+  <caption class="visually-hidden">Категорії, вік, термін навчання і вартість теорії</caption>
+  <thead><tr><th scope="col">Категорія</th><th scope="col">Вік</th><th scope="col">Термін</th><th scope="col">Теорія</th></tr></thead>
+  <tbody>
+    {categories.map((c) => (
+      <tr>
+        <th scope="row"><span class:list={["ctable__letter", c.id === "bc" && "ctable__letter--long"]}>{c.letter === "B→C" ? "B → C" : c.letter}</span>{c.id === "bc" && <span class="ctable__name">Перепідготовка B → C/C1</span>}</th>
+        <td data-label="Вік">{c.age}</td>
+        <td data-label="Термін">{c.term}</td>
+        <td data-label="Теорія" class="num ctable__price">{c.price}</td>
+      </tr>
+    ))}
+    <tr class="ctable__drive">
+      <th scope="row"><span class="ctable__name">Водіння, категорія B</span><span class="ctable__sub">19 занять по 2 години</span></th>
+      <td data-label="Вартість" colspan="3" class="num"><span class="ctable__price">250 грн/год</span> МКП · <span class="ctable__price">350 грн/год</span> АКП</td>
+    </tr>
+  </tbody>
+</table>
+<p class="table-note">{priceNote} Оплата частинами: перша частина — до початку навчання.</p>

@@ -1,0 +1,192 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import FutureLink from "../components/FutureLink.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import CategoryTable from "../components/CategoryTable.astro";
+import Schedule from "../components/Schedule.astro";
+import StickyBar from "../components/StickyBar.astro";
+import Icon from "../components/Icon.astro";
+import fleet from "../assets/img/fleet.jpg";
+import classroom from "../assets/img/class.jpg";
+import { school, classes, addresses, mapHref } from "../data/school";
+
+const title = "Автошкола Львів — курси водіїв категорій A1, A, B, C1, C | 4 класи";
+const description = "Навчання водіїв A1, A, B, C1, C і перепідготовка з B на C/C1. Безкоштовний онлайн-курс ПДР, оплата частинами, денні й вечірні групи. Львів і с. Великий Дорошів.";
+const hours = (id: string) => classes.find((c) => c.id === id)!.lanes;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "DrivingSchool",
+  name: school.name,
+  legalName: school.legal,
+  telephone: school.phone.text,
+  email: school.email,
+  address: { "@type": "PostalAddress", streetAddress: "вул. Варшавська, 1", addressLocality: "Львів", addressCountry: "UA" },
+  location: addresses.map((a) => ({ "@type": "Place", name: `${a.city}, ${a.street}`, address: `${a.city}, ${a.street}` })),
+};
+---
+<Base lang="uk" title={title} description={description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Header slot="header" />
+
+  <Section id="hero" rec="UX-R004,UX-R003,G-R005,MT-R005" class="hero" label="Вибір категорії">
+    <Hero />
+  </Section>
+
+  <Section id="categories" class="band band--white">
+    <div class="container">
+      <div class="section-head">
+        <h2>Категорії та ціни</h2>
+      </div>
+      <CategoryTable />
+    </div>
+  </Section>
+
+  <Section id="schedule" class="band band--surface">
+    <div class="container sched-wrap">
+      <div class="section-head section-head--side">
+        <h2>Розклад занять у 4 класах</h2>
+        <p>Денні групи — 08:00–12:00, вечірні — 18:00–20:00. Обирайте клас ближче до роботи чи дому.</p>
+        <a class="btn btn--primary" href={school.phone.href}><Icon name="phone" size={20} /><span>Записатися на групу</span></a>
+      </div>
+      <div class="sched-main"><Schedule /></div>
+    </div>
+  </Section>
+
+  <Section id="online" class="band band--white band--air">
+    <div class="container online">
+      <div class="online__head">
+        <h2>Безкоштовне онлайн-навчання ПДР</h2>
+        <p class="lead">Вчіть теорію вдома: курс безкоштовний для всіх, хто записався до школи.</p>
+        <div class="online__actions">
+          <FutureLink note="Розділ у розробці" class="btn btn--primary btn--soon"><span>Зареєструватися на курс</span></FutureLink>
+          <a class="textlink" href={school.phone.href}>{school.phone.text}</a>
+          <a class="textlink" href={`mailto:${school.email}`}>{school.email}</a>
+        </div>
+      </div>
+      <ol class="steps">
+        <li><span class="steps__n" aria-hidden="true">1</span><div><h3>Відео з 3D-графікою</h3><p>Правила дорожнього руху — наочно, у зручний час.</p></div></li>
+        <li><span class="steps__n" aria-hidden="true">2</span><div><h3>Онлайн-тренажер</h3><p>Закріплюйте теорію на запитаннях, поки не відчуєте впевненість.</p></div></li>
+        <li><span class="steps__n" aria-hidden="true">3</span><div><h3>Залік</h3><p>Складіть залік з теорії та переходьте до водіння.</p></div></li>
+      </ol>
+    </div>
+  </Section>
+
+  <Section id="fleet" class="band band--white fleet">
+    <div class="container">
+      <div class="section-head">
+        <h2>Автопарк та інструктори</h2>
+      </div>
+    </div>
+    <div class="container fleet__photo">
+      <figure data-clip>
+        <Image src={fleet} alt="Інструктори школи біля навчальних автомобілів" widths={[640, 1000, 1400, 2000]} sizes="(min-width: 1264px) 1200px, 100vw" width={2600} height={956} loading="lazy" decoding="async" />
+        <figcaption class="visually-hidden">Інструктори та автопарк школи</figcaption>
+      </figure>
+    </div>
+    <div class="container">
+      <ul class="facts">
+        <li><h3>МКП і АКП</h3><p>Навчаємо на автомобілях з механічною та автоматичною коробкою передач.</p></li>
+        <li><h3>Додаткові педалі й дзеркала</h3><p>Авто обладнані для безпечного навчання з інструктором.</p></li>
+        <li><h3>Іспит на авто школи</h3><p>Іспит у сервісному центрі МВС зазвичай складають на автомобілі школи.</p></li>
+      </ul>
+    </div>
+  </Section>
+
+  <Section id="access" class="band band--surface">
+    <div class="container access">
+      <div class="access__text">
+        <div class="section-head">
+          <h2>Для кого навчання</h2>
+        </div>
+        <dl class="defs">
+          <div><dt>З 16 і з 18 років</dt><dd>Категорії A1 і A — з 16 років, B і C — з 18 років, або якщо виповниться під час навчання.</dd></div>
+          <div><dt>Люди з інвалідністю й маломобільні групи</dt><dd>Підготовка, перепідготовка й підвищення кваліфікації водіїв з числа осіб з інвалідністю та маломобільних груп.</dd></div>
+          <div><dt>Реєстрація в іншій області</dt><dd>Навчатися можна з реєстрацією в іншій області.</dd></div>
+          <div><dt>Підтримка після випуску</dt><dd>Додаткові теоретичні й практичні заняття, консультації, повторні лекції, розсилка про зміни ПДР.</dd></div>
+        </dl>
+      </div>
+      <figure class="access__photo">
+        <Image src={classroom} alt="Навчальний клас школи з плакатами правил дорожнього руху" widths={[480, 720, 1000]} sizes="(min-width: 900px) 40vw, 100vw" width={1280} height={853} loading="lazy" decoding="async" />
+      </figure>
+    </div>
+  </Section>
+
+  <Section id="enrol" class="band band--white">
+    <div class="container enrol">
+      <div class="section-head">
+        <h2>Як записатися</h2>
+        <p class="lead">Зателефонуйте або напишіть — підкажемо найближчу групу й клас.</p>
+      </div>
+      <div class="enrol__cols">
+        <div>
+          <h3>Документи</h3>
+          <ul class="checks">
+            <li>Паспорт</li>
+            <li>Ідентифікаційний код</li>
+            <li>Фото 3,5×4,5 см (кількість уточнюйте)</li>
+            <li>Медична довідка форми 083/о</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Оплата</h3>
+          <p>Оплата частинами: перша частина — до початку навчання.</p>
+        </div>
+        <div class="enrol__cta">
+          <h3>Записатися</h3>
+          <a class="btn btn--primary btn--lg btn--block" href={school.phone.href}><Icon name="phone" size={22} /><span>{school.phone.text}</span></a>
+          <a class="btn btn--ghost-dark btn--block" href={`mailto:${school.email}`}><Icon name="mail" size={20} /><span>{school.email}</span></a>
+          <FutureLink note="Онлайн-заявка з'явиться в повній версії сайту" class="btn btn--disabled btn--block"><span>Онлайн-заявка</span></FutureLink>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="contacts" class="band band--deep">
+    <div class="container">
+      <div class="section-head section-head--dark">
+        <h2>Контакти</h2>
+      </div>
+      <ul class="addr">
+        {addresses.map((a) => (
+          <li class="addr__card">
+            <h3>{a.street}</h3>
+            <p class="addr__city">{a.city}{a.note && ` · ${a.note}`}</p>
+            <p class="addr__hours"><Icon name="clock" size={18} /><span>{hours(a.id).map((l) => l.open ? `вечірня група ${l.time}, дні уточнюйте за телефоном` : `${l.days} ${l.time}`).filter((v, i, arr) => arr.indexOf(v) === i).join(" · ")}</span></p>
+            <a class="addr__map" href={mapHref(classes.find((c) => c.id === a.id)!.map)} target="_blank" rel="noopener noreferrer"><Icon name="pin" size={18} /><span>Показати на карті<span class="visually-hidden">: {a.street} (відкриється в новій вкладці)</span></span></a>
+          </li>
+        ))}
+      </ul>
+      <div class="contact-lines">
+        <div>
+          <h3>Телефони</h3>
+          <ul>
+            {school.phones.map((p) => <li><a class="big-link" href={p.href}>{p.text}</a></li>)}
+          </ul>
+          <p class="small">Міські номери Львова.</p>
+        </div>
+        <div>
+          <h3>Пошта</h3>
+          <a class="big-link big-link--sm" href={`mailto:${school.email}`}>{school.email}</a>
+        </div>
+        <div>
+          <a class="btn btn--gold btn--lg" href={school.phone.href}><Icon name="phone" size={22} /><span>Записатися — {school.phone.short}</span></a>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <footer slot="footer" class="site-footer">
+    <div class="container site-footer__row">
+      <p>{school.legal} (ЛОУ СТЦ ТСО України) · ЄДРПОУ {school.edrpou}</p>
+      <ul class="site-footer__links">
+        <li><FutureLink note="Розділ у розробці">Галерея</FutureLink></li>
+        <li><FutureLink note="Розділ у розробці">Запитання</FutureLink></li>
+        <li><FutureLink note="Розділ у розробці">Відгуки</FutureLink></li>
+      </ul>
+    </div>
+  </footer>
+  <StickyBar slot="footer" />
+</Base>

@@ -1,0 +1,11 @@
+---
+import Base from "../layouts/Base.astro";
+import { school } from "../data/school";
+---
+<Base lang="uk" title="Сторінку не знайдено — Автошкола Львів" description="Сторінку не знайдено.">
+  <div class="container page-404">
+    <h1>Такої сторінки немає</h1>
+    <p>Поверніться на головну або зателефонуйте нам: <a href={school.phone.href}>{school.phone.text}</a>.</p>
+    <a class="btn btn--primary" href="./">На головну</a>
+  </div>
+</Base>

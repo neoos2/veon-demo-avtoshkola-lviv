@@ -1,0 +1,54 @@
+---
+import Icon from "./Icon.astro";
+import { categories, school, priceNote } from "../data/school";
+const first = "b";
+---
+<div class="hero__grid container">
+  <div class="hero__copy">
+    <p class="hero__kicker">4 класи у Львові та Великому Дорошеві · денні й вечірні групи</p>
+    <h1 class="hero__title" data-rec="SE-R001">Автошкола у Львові: категорії A1, A, B, C1, C</h1>
+  </div>
+  <div class="picker" id="picker">
+    <p class="visually-hidden" id="picker-label">Оберіть свою літеру: покажемо вік, термін і вартість теорії</p>
+    <div class="picker__tiles" role="group" aria-labelledby="picker-label">
+      {categories.map((c, i) => (
+        <button type="button" class:list={["tile", c.id === "bc" && "tile--long"]} style={`--i:${i}`} data-cat={c.id} aria-pressed={c.id === first ? "true" : "false"} aria-controls="answer" aria-label={c.title}>
+          <span class="tile__letter" aria-hidden="true">{c.id === "bc" ? <>B<svg class="tile__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h17m-6-6 6 6-6 6" /></svg>C</> : c.letter}</span>
+        </button>
+      ))}
+    </div>
+    <noscript><p class="picker__nojs"><a href="#categories">Усі категорії, терміни й ціни — у таблиці нижче</a></p></noscript>
+    <div class="answer" id="answer" aria-live="polite">
+      {categories.map((c) => (
+        <div class="answer__body" data-answer={c.id} hidden={c.id !== first}>
+          <h2 class="answer__title">{c.title}</h2>
+          <dl class="answer__facts">
+            <div><dt>Вік</dt><dd>{c.age}</dd></div>
+            <div><dt>Термін</dt><dd>{c.term}</dd></div>
+            <div><dt>Теорія</dt><dd class="num">{c.price}</dd></div>
+          </dl>
+          {c.extra && <p class="answer__extra">{c.extra}</p>}
+        </div>
+      ))}
+      <p class="answer__note">{priceNote}</p>
+      <a class="btn btn--gold btn--lg btn--block" href={school.phone.href} data-rec="UX-R003"><Icon name="phone" size={22} /><span>Записатися —</span> <span>{school.phone.short}</span></a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const root = document.getElementById("picker");
+  if (root) {
+    const tiles = root.querySelectorAll<HTMLButtonElement>(".tile");
+    const bodies = root.querySelectorAll<HTMLElement>("[data-answer]");
+    tiles.forEach((t) => t.addEventListener("click", () => {
+      if (t.getAttribute("aria-pressed") === "true") return;
+      tiles.forEach((o) => o.setAttribute("aria-pressed", String(o === t)));
+      bodies.forEach((b) => {
+        const on = b.dataset.answer === t.dataset.cat;
+        b.hidden = !on;
+        if (on) { b.classList.remove("is-in"); void b.offsetWidth; b.classList.add("is-in"); }
+      });
+    }));
+  }
+</script>

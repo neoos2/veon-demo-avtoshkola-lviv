@@ -1,0 +1,15 @@
+---
+import Icon from "./Icon.astro";
+import { school } from "../data/school";
+---
+<div class="sticky-bar" data-rec="UX-R003" id="sticky-bar">
+  <a class="btn btn--gold" href={school.phone.href}><Icon name="phone" size={20} /><span>Зателефонувати</span></a>
+  <a class="btn btn--ghost" href="#schedule">Розклад</a>
+</div>
+<script>
+  const bar = document.getElementById("sticky-bar");
+  const hero = document.getElementById("hero");
+  if (bar && hero && "IntersectionObserver" in window) {
+    new IntersectionObserver(([e]) => bar.classList.toggle("is-on", !e.isIntersecting), { threshold: 0 }).observe(hero);
+  }
+</script>

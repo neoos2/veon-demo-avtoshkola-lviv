@@ -1,0 +1,41 @@
+---
+import "../styles/tokens.css";
+import "../styles/global.css";
+import "../styles/site.css";
+import geoCyr from "../assets/fonts/geologica-cyrillic-wght-normal.woff2?url";
+import plexCyr from "../assets/fonts/ibm-plex-sans-cyrillic-400-normal.woff2?url";
+
+interface Props { lang: string; title: string; description: string; canonical?: string; }
+const { lang, title, description, canonical } = Astro.props;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline>document.documentElement.classList.add("js")</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="robots" content="noindex" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="uk_UA" />
+    <link rel="preload" href={geoCyr} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={plexCyr} as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
+  </head>
+  <body id="top" data-rec="SE-R002">
+    <a class="skip-link" href="#main">{lang.startsWith("uk") ? "До змісту" : lang.startsWith("ru") ? "К содержанию" : "Skip to content"}</a>
+    <slot name="header" />
+    <main id="main" data-rec="UX-R010,SE-R004"><slot /></main>
+    <slot name="footer" />
+    <script src="../scripts/reveal.ts"></script>
+  </body>
+</html>
+
+<style is:global>
+  html { overflow-x: clip; }
+  body { overflow-x: clip; }
+</style>

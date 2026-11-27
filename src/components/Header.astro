@@ -1,0 +1,35 @@
+---
+import { Image } from "astro:assets";
+import emblem from "../assets/img/emblem.png";
+import Icon from "./Icon.astro";
+import { school } from "../data/school";
+const links = [
+  { href: "#categories", label: "Категорії й ціни" },
+  { href: "#schedule", label: "Розклад" },
+  { href: "#online", label: "Онлайн ПДР" },
+  { href: "#contacts", label: "Контакти" },
+];
+---
+<header class="site-header" data-rec="UX-R005">
+  <div class="container site-header__row">
+    <a class="brand" href="#top" aria-label="Автошкола Львів — на початок сторінки">
+      <span class="brand__plate"><Image src={emblem} alt="" width={30} height={40} loading="eager" class="brand__emblem" /></span>
+      <span class="brand__word">Автошкола Львів</span>
+    </a>
+    <nav class="nav" aria-label="Розділи сторінки">
+      <ul>
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <a class="btn btn--gold btn--sm site-header__call" href={school.phone.href}><Icon name="phone" size={18} /><span>Записатися<span class="hide-md">: {school.phone.short}</span></span></a>
+    <details class="menu" id="menu">
+      <summary class="menu__btn" aria-label="Меню"><span class="menu__bars" aria-hidden="true"></span><span class="menu__label">Меню</span></summary>
+      <div class="menu__panel">
+        <a class="btn btn--gold btn--block" href={school.phone.href}><Icon name="phone" size={20} /><span>{school.phone.text}</span></a>
+        <ul>
+          {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </div>
+    </details>
+  </div>
+</header>
